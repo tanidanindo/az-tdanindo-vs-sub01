@@ -1,0 +1,6 @@
+object_id                  = "8429017d-404c-461d-b38f-7ec1a0674265"
+tenant_id                  = "7581192d-cf86-4c37-aa80-3b9f23104976"
+subscription_id            = "f1e531f4-e1b0-486c-bb3c-a2e0a49d0121"
+resource_group_location    = "west us 2"
+resource_group_name_prefix = "rg-td"
+location                   = "west us 2"
