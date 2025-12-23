@@ -1,0 +1,38 @@
+
+  name: Terraform Format
+
+  on:
+    push:
+      branches: [ main, practice ]
+      paths:
+        - '**/*.tf'
+    pull_request:
+      paths:
+        - '**/*.tf'
+
+  jobs:
+    fmt:
+      name: Run terraform fmt and commit
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v2
+          with:
+            terraform_version: '1.5.7'
+
+        - name: Run terraform fmt
+          run: terraform fmt -recursive
+
+        - name: Commit formatted files
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message:  terraform fmt
+            file_pattern: '**/*.tf'
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
