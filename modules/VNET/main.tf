@@ -41,7 +41,7 @@ resource "azurerm_route_table" "route_table" {
   name                          = each.value.name
   location                      = var.location
   resource_group_name           = var.resource_group_name
-  disable_bgp_route_propagation = lookup(each.value, "disable_bgp_route_propagation", false)
+  bgp_route_propagation_enabled = lookup(each.value, "bgp_route_propagation_enabled", false)
 
   tags = var.tags
 }
