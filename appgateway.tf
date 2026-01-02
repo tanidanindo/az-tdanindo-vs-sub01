@@ -66,11 +66,6 @@ resource "azurerm_application_gateway" "appgateway" {
     priority                    = 200
   }
 
-  redirect_configuration {
-    name                 = "http-to-https-redirect"
-    redirect_type        = "Permanent"
-    target_listener_name = "https-listener"
-  }
 
 
   tags = var.tags
