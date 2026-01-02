@@ -20,7 +20,7 @@ module "vnet" {
           service_delegations = [
             {
               name    = "Microsoft.Network/applicationGateways"
-              actions = ["Microsoft.Network/applicationGateways/*"]
+              actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
             }
           ]
         }
