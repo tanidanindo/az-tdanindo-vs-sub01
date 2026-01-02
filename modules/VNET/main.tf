@@ -16,6 +16,21 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = each.value.address_prefixes
 
   service_endpoints = lookup(each.value, "service_endpoints", [])
+
+  dynamic "delegation" {
+    for_each = lookup(each.value, "delegations", [])
+    content {
+      name = delegation.value.name
+
+      dynamic "service_delegation" {
+        for_each = lookup(delegation.value, "service_delegations", [])
+        content {
+          name    = service_delegation.value.name
+          actions = lookup(service_delegation.value, "actions", [])
+        }
+      }
+    }
+  }
 }
 
 resource "azurerm_network_security_group" "nsg" {
