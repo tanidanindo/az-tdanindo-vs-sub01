@@ -100,3 +100,29 @@ variable "key_size" {
   description = "The size in bits of the key to be created."
   default     = 2048
 }
+
+
+variable "app_gateway_rg_name" {
+  type        = string
+  description = "The name of the Application Gateway Resource Group."
+  default     = "appgateway-rg"
+}
+
+variable "app_gateway_public_ip_name" {
+  type        = string
+  description = "The name of the Application Gateway Public IP resource."
+  default     = "appgateway-pip"
+}
+
+variable "app_gateway_name" {
+  type        = string
+  description = "The name of the Application Gateway."
+  default     = "appgateway"
+}
+
+variable "app_gateway_subnet_id" {
+  type        = string
+  description = "The ID of the Application Gateway Subnet."
+  default     = ""
+}
+

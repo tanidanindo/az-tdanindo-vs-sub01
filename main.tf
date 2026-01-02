@@ -18,3 +18,13 @@ resource "azurerm_log_analytics_workspace" "tanilaw01" {
   # Retention setting (data older than this is purged)
   retention_in_days = 30
 }
+
+
+resource "azurerm_resource_group" "app_gateway_rg" {
+  name     = var.app_gateway_rg_name
+  location = var.resource_group_location
+  tags     = var.tags
+}
+output "app_gateway_resource_group_name" {
+  value = azurerm_resource_group.app_gateway_rg.name
+}
