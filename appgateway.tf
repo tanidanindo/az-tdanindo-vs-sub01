@@ -59,11 +59,12 @@ resource "azurerm_application_gateway" "appgateway" {
 
 
   request_routing_rule {
-    name                        = "http-to-https-redirect-rule"
-    rule_type                   = "Basic"
-    http_listener_name          = "http-listener"
-    redirect_configuration_name = "http-to-https-redirect"
-    priority                    = 200
+    name                       = "http-to-httprule"
+    rule_type                  = "Basic"
+    http_listener_name         = "http-listener"
+    backend_address_pool_name  = "backend-pool"
+    backend_http_settings_name = "backend-http-settings"
+    priority                   = 200
   }
 
 
