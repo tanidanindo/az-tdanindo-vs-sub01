@@ -14,6 +14,10 @@ module "vnet" {
       name             = "${var.resource_group_name_prefix}-subnet-02"
       address_prefixes = ["10.0.1.32/27"]
     }
+    subnet3 = {
+      name             = "${var.resource_group_name_prefix}-subnet-03"
+      address_prefixes = ["10.0.1.64/27"]
+    }
   }
 
   tags = var.tags
