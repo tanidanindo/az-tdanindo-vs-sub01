@@ -27,6 +27,10 @@ module "application_gateway" {
     name                          = "Private"
     private_ip_address_allocation = "Dynamic"
   }
+  frontend_ip_configuration_public_name = "Public"
+  public_ip_resource_id                 = azurerm_public_ip.public_ip.id
+
+
 
   # Frontend IP configurations: one public and one private
   # frontend_ip_configurations = [
