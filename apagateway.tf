@@ -27,7 +27,7 @@ module "application_gateway" {
     private_ip_address_allocation = "Dynamic"
   }
   frontend_ip_configuration_public_name = "Public"
-  public_ip_resource_id                 = azurerm_public_ip.public_ip.id
+  public_ip_resource_id                 = module.public_ip_address.public_ip_id
 
 
 
