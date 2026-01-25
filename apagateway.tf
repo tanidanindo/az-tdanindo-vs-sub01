@@ -132,6 +132,8 @@ module "application_gateway" {
     max_capacity = 4
   }
   create_public_ip = false
+  enable_telemetry = true
+
   frontend_ip_configuration_private = {
     name                          = "private-ip-config"
     private_ip_address_allocation = "Dynamic"
@@ -140,7 +142,6 @@ module "application_gateway" {
   frontend_ip_configuration_public_name = "Public"
   public_ip_resource_id                 = module.public_ip.public_ip_id
 
-  enable_telemetry = true
   sku = {
     name     = "Standard_v2"
     tier     = "Standard_v2"
