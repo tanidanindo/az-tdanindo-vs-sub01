@@ -23,7 +23,7 @@ module "application_gateway" {
 
   create_public_ip = false
   frontend_ip_configuration_private = {
-    name                          = "Private"
+    name                          = "private-ip-config"
     private_ip_address_allocation = "Dynamic"
   }
   frontend_ip_configuration_public_name = "Public"
@@ -110,7 +110,7 @@ module "application_gateway" {
   http_listeners = {
     HttpListener = {
       name                           = "AceTestListener"
-      frontend_ip_configuration_name = "Private"
+      frontend_ip_configuration_name = "private-ip-config"
       host_name                      = null
       frontend_port_name             = "MASfrontend-7180"
     }
