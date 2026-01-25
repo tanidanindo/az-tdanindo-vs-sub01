@@ -26,6 +26,7 @@ module "application_gateway" {
     name                          = "private-ip-config"
     private_ip_address_allocation = "Dynamic"
   }
+
   frontend_ip_configuration_public_name = "Public"
   public_ip_resource_id                 = module.public_ip.public_ip_id
 
@@ -139,6 +140,11 @@ module "application_gateway" {
   }
 
   enable_telemetry = true
+  sku = {
+    name     = "Standard_v2"
+    tier     = "Standard_v2"
+    capacity = 1 # Set the initial capacity to 0 for autoscaling
+  }
 
 
   # Zone redundancy for the application gateway
