@@ -136,7 +136,8 @@ module "application_gateway" {
 
   frontend_ip_configuration_private = {
     name                          = "private-ip-config"
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.0.1.38"
   }
 
   frontend_ip_configuration_public_name = "Public"
