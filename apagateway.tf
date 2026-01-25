@@ -25,19 +25,19 @@ module "application_gateway" {
   public_ip_name   = var.app_gateway_public_ip_name
 
   # Frontend IP configurations: one public and one private
-  frontend_ip_configurations = [
-    {
-      name = "appgw-frontend-public"
-      # When module creates the public IP, it may use it automatically.
-      # If the module expects an explicit public_ip_address_id, set it accordingly.
-      public_ip_address_id = null
-    },
-    {
-      name                          = "appgw-frontend-private"
-      subnet_id                     = var.app_gateway_subnet_id
-      private_ip_address_allocation = "Dynamic"
-    }
-  ]
+  # frontend_ip_configurations = [
+  #   {
+  #     name = "appgw-frontend-public"
+  #     # When module creates the public IP, it may use it automatically.
+  #     # If the module expects an explicit public_ip_address_id, set it accordingly.
+  #     public_ip_address_id = null
+  #   },
+  #   {
+  #     name                          = "appgw-frontend-private"
+  #     subnet_id                     = var.app_gateway_subnet_id
+  #     private_ip_address_allocation = "Dynamic"
+  #   }
+  # ]
   #private link configuration 
   # private_link_configurations = {
   #   plink = {
