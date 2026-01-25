@@ -27,8 +27,7 @@ module "application_gateway" {
     private_ip_address_allocation = "Dynamic"
   }
   frontend_ip_configuration_public_name = "Public"
-  public_ip_resource_id                 = module.public_ip_address.public_ip_id
-
+  public_ip_resource_id                 = module.public_ip.public_ip_id
 
 
   # Frontend IP configurations: one public and one private
