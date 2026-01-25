@@ -125,12 +125,12 @@ variable "app_gateway_subnet_id" {
   description = "The ID of the Application Gateway Subnet."
   default     = ""
 }
-variable "MASBackendIPs" {
-  description = "List of backend IP addresses for the Application Gateway."
-  type = list(object({
-    ip_address = string
-  }))
-}
+# variable "MASBackendIPs" {
+#   description = "List of backend IP addresses for the Application Gateway."
+#   type = list(object({
+#     ip_address = string
+#   }))
+# }
 variable "private_link_subnet_id" {
   type        = string
   description = "The ID of the Private Endpoint/Private Link Subnet."

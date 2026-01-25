@@ -125,7 +125,7 @@ module "application_gateway" {
     }
     # Add more rules as needed
   }
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.app_gateway_rg_name
   autoscale_configuration = {
     min_capacity = 2
     max_capacity = 4
