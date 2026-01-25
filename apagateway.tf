@@ -21,14 +21,7 @@ module "application_gateway" {
   source = "Azure/avm-res-network-applicationgateway/azurerm"
 
 
-  create_public_ip = false
-  frontend_ip_configuration_private = {
-    name                          = "private-ip-config"
-    private_ip_address_allocation = "Dynamic"
-  }
 
-  frontend_ip_configuration_public_name = "Public"
-  public_ip_resource_id                 = module.public_ip.public_ip_id
 
 
   # Frontend IP configurations: one public and one private
@@ -138,6 +131,14 @@ module "application_gateway" {
     min_capacity = 2
     max_capacity = 4
   }
+  create_public_ip = false
+  frontend_ip_configuration_private = {
+    name                          = "private-ip-config"
+    private_ip_address_allocation = "Dynamic"
+  }
+
+  frontend_ip_configuration_public_name = "Public"
+  public_ip_resource_id                 = module.public_ip.public_ip_id
 
   enable_telemetry = true
   sku = {
