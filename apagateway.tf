@@ -4,16 +4,16 @@
 # #   name = var.resource_group_name
 # }
 
-# module "public_ip" {
-#   source              = "https://dev.azure.com/brucepowerit/Azure%20IAC%20-%20Workloads/_git/module-terraform-azurerm-public-ip?path=/example/main.tf"
-#   name                = var.app_gateway_public_ip_name
-#   resource_group_name = var.resource_group_name
-#   location            = var.location
-#   allocation_method   = "Dynamic"
-#   sku                 = "Standard"
-#   ip_version          = "IPv4"
+module "public_ip" {
+  source              = "Azure/avm-res-network-publicipaddress/azurerm"
+  name                = var.app_gateway_public_ip_name
+  resource_group_name = var.app_gateway_rg_name
+  location            = var.location
+  allocation_method   = "Dynamic"
+  sku                 = "Standard"
+  ip_version          = "IPv4"
 
-# }
+}
 
 
 
@@ -21,15 +21,13 @@ module "application_gateway" {
   source = "Azure/avm-res-network-applicationgateway/azurerm"
 
 
-  create_public_ip = true
-  public_ip_name   = var.app_gateway_public_ip_name
+  create_public_ip = false
   frontend_ip_configuration_private = {
     name                          = "Private"
     private_ip_address_allocation = "Dynamic"
   }
   frontend_ip_configuration_public_name = "Public"
-  public_ip_resource_id                 = azurerm_public_ip.public_ip.id
-
+  public_ip_resource_id                 = module.public_ip.public_ip_id
 
 
   # Frontend IP configurations: one public and one private
