@@ -9,7 +9,7 @@ module "public_ip" {
   name                = var.app_gateway_public_ip_name
   resource_group_name = var.app_gateway_rg_name
   location            = var.location
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
   sku                 = "Standard"
   ip_version          = "IPv4"
 
