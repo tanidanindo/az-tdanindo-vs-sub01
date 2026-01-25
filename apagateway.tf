@@ -1,8 +1,8 @@
 
 
-data "azurerm_resource_group" "masinterconnect_rg" {
-  name = var.resource_group_name
-}
+# data "azurerm_resource_group" "masinterconnect_rg" {
+# #   name = var.resource_group_name
+# }
 
 # module "public_ip" {
 #   source              = "https://dev.azure.com/brucepowerit/Azure%20IAC%20-%20Workloads/_git/module-terraform-azurerm-public-ip?path=/example/main.tf"
@@ -18,7 +18,7 @@ data "azurerm_resource_group" "masinterconnect_rg" {
 
 
 module "application_gateway" {
-  source = "https://dev.azure.com/brucepowerit/Azure%20IAC%20-%20Workloads/_git/module-terraform-azurerm-applicationgateway"
+  source = "https://github.com/Azure/terraform-azurerm-avm-res-network-applicationgateway"
 
 
   create_public_ip = true
