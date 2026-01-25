@@ -125,33 +125,12 @@ variable "app_gateway_subnet_id" {
   description = "The ID of the Application Gateway Subnet."
   default     = ""
 }
-
-
-variable "app_gateway_public_ip_name" {
-  type        = string
-  description = "The name of the Application Gateway Public IP resource."
-  default     = "appgateway-pip"
-}
-
 variable "MASBackendIPs" {
   description = "List of backend IP addresses for the Application Gateway."
   type = list(object({
     ip_address = string
   }))
 }
-
-variable "app_gateway_name" {
-  type        = string
-  description = "The name of the Application Gateway."
-  default     = "appgateway"
-}
-
-variable "app_gateway_subnet_id" {
-  type        = string
-  description = "The ID of the Application Gateway Subnet."
-  default     = ""
-}
-
 variable "private_link_subnet_id" {
   type        = string
   description = "The ID of the Private Endpoint/Private Link Subnet."

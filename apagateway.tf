@@ -18,7 +18,7 @@
 
 
 module "application_gateway" {
-  source = "https://github.com/Azure/terraform-azurerm-avm-res-network-applicationgateway"
+  source = "Azure/avm-res-network-applicationgateway/azurerm"
 
 
   create_public_ip = true
