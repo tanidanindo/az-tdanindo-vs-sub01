@@ -13,6 +13,19 @@ module "vnet" {
     subnet2 = {
       name             = "${var.resource_group_name_prefix}-subnet-02"
       address_prefixes = ["10.0.1.32/27"]
+
+      delegations = [
+        {
+          name = "app_gateway_delegation"
+          service_delegations = [
+            {
+              name    = "Microsoft.Network/applicationGateways"
+              actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+            }
+          ]
+        }
+      ]
+
     }
     subnet3 = {
       name             = "${var.resource_group_name_prefix}-subnet-03"
