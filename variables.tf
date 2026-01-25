@@ -155,7 +155,7 @@ variable "mas_agw_private_service_connection_name" {
 variable "mas_agw_subresource_names" {
   type        = list(string)
   description = "The name of the private service connection."
-  default     = ""
+  default     = ["private"]
 }
 
 
