@@ -1,0 +1,155 @@
+module "app_gateway_https" {
+  source  = "Azure/avm-res-network-applicationgateway/azurerm"
+  version = "~> 0.4"
+
+  # Required parameters
+  name                = "appgw-https-${local.environment}"
+  resource_group_name = azurerm_resource_group.this.name
+  location            = azurerm_resource_group.this.location
+
+  # Gateway IP configuration - reference existing subnet
+  gateway_ip_configuration = {
+    name      = "gateway-ip-config"
+    subnet_id = azurerm_subnet.appgateway.id
+  }
+
+  # Frontend configuration
+  frontend_ports = {
+    https = {
+      name = "https-port"
+      port = 443
+    }
+  }
+
+  create_public_ip = True
+
+  # Private IP configuration for internal gateway
+  frontend_ip_configuration_private = {
+    name                          = "private"
+    private_ip_address            = "10.1.1.2"
+    private_ip_address_allocation = "Static"
+  }
+
+  # Backend pools - backend with private IP 10.0.0.34
+  backend_address_pools = {
+    backend_pool = {
+      name         = "backend-pool"
+      ip_addresses = ["10.0.0.34"]
+    }
+  }
+
+  # Backend HTTP settings for HTTPS
+  backend_http_settings = {
+    backend_https_settings = {
+      name                                = "backend-https-settings"
+      port                                = 443
+      protocol                            = "Https"
+      cookie_based_affinity               = "Disabled"
+      pick_host_name_from_backend_address = true
+      request_timeout                     = 30
+    }
+  }
+
+  # HTTP listener for HTTPS
+  http_listeners = {
+    https_listener = {
+      name                           = "https-listener"
+      frontend_port_name             = "https-port"
+      frontend_ip_configuration_name = "private"
+      protocol                       = "Https"
+      ssl_certificate_name           = "appgw-cert"
+      require_sni                    = false
+    }
+  }
+
+  # Routing rules
+  request_routing_rules = {
+    https_routing_rule = {
+      name                       = "https-routing-rule"
+      rule_type                  = "Basic"
+      http_listener_name         = "https_listener"
+      backend_address_pool_name  = "backend_pool"
+      backend_http_settings_name = "backend_https_settings"
+      priority                   = 1
+    }
+  }
+
+  # SSL certificate - provide your certificate here
+  ssl_certificates = {
+    appgw_cert = {
+      name = "appgw-cert"
+      # Option 1: Use base64 encoded PFX data
+      # data     = file("${path.module}/certs/appgw.pfx")
+      # password = "your-certificate-password"
+
+      # Option 2: Use Key Vault secret ID (uncomment if using Key Vault)
+      # key_vault_secret_id = azurerm_key_vault_certificate.appgw.secret_id
+    }
+  }
+
+  # SKU configuration
+  sku = {
+    name     = "Standard_v2"
+    tier     = "Standard_v2"
+    capacity = 2
+  }
+
+  # Auto-scaling configuration
+  autoscale_configuration = {
+    min_capacity = 1
+    max_capacity = 5
+  }
+
+  # Enable HTTP/2
+  http2_enable = true
+
+  # Optional: Enable health probes
+  probe_configurations = {
+    https_probe = {
+      name                                      = "https-health-probe"
+      protocol                                  = "Https"
+      path                                      = "/"
+      interval                                  = 30
+      timeout                                   = 30
+      unhealthy_threshold                       = 3
+      pick_host_name_from_backend_http_settings = true
+    }
+  }
+
+  # Update backend settings to use the probe
+  # Note: Uncomment this block after creating the probe above
+  # backend_http_settings = {
+  #   backend_https_settings = {
+  #     name                = "backend-https-settings"
+  #     port                = 443
+  #     protocol            = "Https"
+  #     cookie_based_affinity = "Disabled"
+  #     pick_host_name_from_backend_address = true
+  #     request_timeout     = 30
+  #     probe_name          = "https_probe"
+  #   }
+  # }
+
+  # Tags
+  tags = merge(
+    local.common_tags,
+    {
+      Component = "ApplicationGateway"
+    }
+  )
+
+  depends_on = [
+    azurerm_subnet.appgateway
+  ]
+}
+
+# Outputs
+output "appgateway_id" {
+  description = "The ID of the Application Gateway"
+  value       = module.app_gateway_https.application_gateway_id
+}
+
+output "appgateway_private_ip" {
+  description = "The private IP address of the Application Gateway frontend"
+  value       = try(module.app_gateway_https.frontend_private_ip_address, "To be assigned after deployment")
+}

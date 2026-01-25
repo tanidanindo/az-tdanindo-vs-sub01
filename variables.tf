@@ -125,4 +125,39 @@ variable "app_gateway_subnet_id" {
   description = "The ID of the Application Gateway Subnet."
   default     = ""
 }
+# variable "MASBackendIPs" {
+#   description = "List of backend IP addresses for the Application Gateway."
+#   type = list(object({
+#     ip_address = string
+#   }))
+# }
+variable "private_link_subnet_id" {
+  type        = string
+  description = "The ID of the Private Endpoint/Private Link Subnet."
+  default     = ""
+}
+
+variable "private_endpoint1_name" {
+  type        = string
+  description = "The ID of the Private Link Subnet."
+  default     = ""
+}
+variable "mas_agw_id" {
+  type        = string
+  description = "The ID of the Private Link Subnet."
+  default     = ""
+}
+variable "mas_agw_private_service_connection_name" {
+  type        = string
+  description = "The name of the private service connection."
+  default     = ""
+}
+variable "mas_agw_subresource_names" {
+  type        = list(string)
+  description = "The name of the private service connection."
+  default     = ["private"]
+}
+
+
+
 

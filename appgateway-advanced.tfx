@@ -1,0 +1,167 @@
+# Azure Verified Module for Application Gateway
+# Reference: https://github.com/Azure/terraform-azurerm-avm-res-network-applicationgateway
+
+module "application_gateway_advanced" {
+  source  = "Azure/avm-res-network-applicationgateway/azurerm"
+  version = "~> 0.4"
+
+  # Backend address pool configuration for the application gateway
+  # Mandatory Input
+  backend_address_pools = {
+    backend_pool_80_443 = {
+      name         = "backend-pool-ip"
+      ip_addresses = ["10.89.3.3"]
+    }
+  }
+
+  # Backend http settings configuration for the application gateway
+  # Mandatory Input
+  backend_http_settings = {
+    backend_http_settings_80 = {
+      name                  = "backend-http-settings-80"
+      cookie_based_affinity = "Disabled"
+      path                  = "/"
+      port                  = 80
+      protocol              = "Http"
+      request_timeout       = 30
+      connection_draining = {
+        enable_connection_draining = true
+        drain_timeout_sec          = 300
+      }
+    }
+    backend_http_settings_443 = {
+      name                  = "backend-http-settings-443"
+      cookie_based_affinity = "Disabled"
+      path                  = "/"
+      port                  = 443
+      protocol              = "Https"
+      request_timeout       = 30
+      connection_draining = {
+        enable_connection_draining = true
+        drain_timeout_sec          = 300
+      }
+    }
+  }
+
+  # Frontend port configuration block for the application gateway
+  frontend_ports = {
+    frontend_port_80 = {
+      name = "frontend-port-80"
+      port = 80
+    }
+    frontend_port_443 = {
+      name = "frontend-port-443"
+      port = 443
+    }
+  }
+
+  # Gateway IP configuration
+  gateway_ip_configuration = {
+    name      = "gateway-ip-config"
+    subnet_id = var.app_gateway_subnet_id
+  }
+
+  # HTTP Listeners configuration for the application gateway
+  # Both listeners use the private frontend IP
+  # Mandatory Input
+  http_listeners = {
+    http_listener_80 = {
+      name                           = "http-listener-80"
+      frontend_ip_configuration_name = "frontend-ip-private"
+      frontend_port_name             = "frontend-port-80"
+      protocol                       = "Http"
+      host_name                      = null
+    }
+    https_listener_443 = {
+      name                           = "https-listener-443"
+      frontend_ip_configuration_name = "frontend-ip-private"
+      frontend_port_name             = "frontend-port-443"
+      protocol                       = "Https"
+      ssl_certificate_name           = "appgateway-cert"
+      host_name                      = null
+    }
+  }
+
+  # Application gateway name and location
+  location = azurerm_resource_group.app_gateway_rg.location
+  name     = "appgateway-advanced"
+
+  # Routing rules configuration for the backend pool
+  # Mandatory Input
+  request_routing_rules = {
+    routing_rule_http = {
+      name                       = "routing-rule-http"
+      rule_type                  = "Basic"
+      http_listener_name         = "http-listener-80"
+      backend_address_pool_name  = "backend-pool-ip"
+      backend_http_settings_name = "backend-http-settings-80"
+      priority                   = 100
+    }
+    routing_rule_https = {
+      name                       = "routing-rule-https"
+      rule_type                  = "Basic"
+      http_listener_name         = "https-listener-443"
+      backend_address_pool_name  = "backend-pool-ip"
+      backend_http_settings_name = "backend-http-settings-443"
+      priority                   = 101
+    }
+  }
+
+  # Resource group configuration
+  resource_group_name = azurerm_resource_group.app_gateway_rg.name
+
+  # SKU configuration
+  sku = {
+    capacity = 2
+    name     = "Standard_v2"
+    tier     = "Standard_v2"
+  }
+
+  # Autoscaling configuration
+  autoscale_configuration = {
+    min_capacity = 2
+    max_capacity = 3
+  }
+
+  # Frontend IP Configuration - Public IP
+  create_public_ip = true
+  public_ip_config = {
+    name              = "appgateway-advanced-pip"
+    allocation_method = "Static"
+    sku_tier          = "Standard"
+  }
+
+  # Frontend IP Configuration - Private IP
+  frontend_ip_configuration_private = {
+    name                          = "frontend-ip-private"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.89.3.10" # Adjust this to your subnet's IP range
+  }
+
+  # Tags
+  tags = var.tags
+
+  # Telemetry
+  enable_telemetry = false
+}
+
+# Output the Application Gateway details
+output "appgateway_advanced_id" {
+  description = "The ID of the Azure Application Gateway"
+  value       = module.application_gateway_advanced.application_gateway_id
+}
+
+output "appgateway_advanced_name" {
+  description = "The name of the Azure Application Gateway"
+  value       = module.application_gateway_advanced.application_gateway_name
+}
+
+output "appgateway_advanced_backend_pools" {
+  description = "Backend address pools configuration"
+  value       = module.application_gateway_advanced.backend_address_pools
+}
+
+output "appgateway_advanced_http_listeners" {
+  description = "HTTP listeners configuration"
+  value       = module.application_gateway_advanced.http_listeners
+}
