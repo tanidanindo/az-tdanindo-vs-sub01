@@ -10,12 +10,12 @@ resource "azurerm_monitor_data_collection_rule" "example" {
     }
   }
   data_flow {
-    streams       = ["Example"]
+    streams       = ["Custom-Example_CL"]
     destinations  = ["tanilaw01"]
-    output_stream = "Example_CL"
+    output_stream = "Custom-Example_CL"
   }
   stream_declaration {
-    stream_name = "Example"
+    stream_name = "Custom-Example_CL"
     column {
       name = "TimeGenerated"
       type = "datetime"
