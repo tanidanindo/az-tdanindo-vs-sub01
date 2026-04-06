@@ -91,3 +91,49 @@ resource "azapi_resource" "data_collection_logs_table2" {
     }
   )
 }
+
+
+resource "azapi_resource" "data_collection_logs_table3" {
+  name      = "Example3_CL"
+  parent_id = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-td-vs01/providers/Microsoft.OperationalInsights/workspaces/tanilaw01"
+  type      = "Microsoft.OperationalInsights/workspaces/tables@2022-10-01"
+  body = jsonencode(
+    {
+      "properties" : {
+        "schema" : {
+          "name" : "Example3_CL",
+          "columns" : [
+            {
+              "description" : "The time at which the data was generated",
+              "name" : "TimeGenerated",
+              "type" : "datetime"
+            },
+            {
+              "description" : "The computer that generated the data",
+              "name" : "Computer",
+              "type" : "string"
+            },
+            {
+              "description" : "Additional message properties",
+              "name" : "AdditionalContext",
+              "type" : "dynamic"
+            },
+            {
+              "description" : "Name of the counter",
+              "name" : "CounterName",
+              "type" : "string"
+            },
+            {
+              "description" : "Value collected for the counter",
+              "name" : "CounterValue",
+              "type" : "real"
+            }
+
+          ]
+        },
+        "retentionInDays" : 30,
+        "totalRetentionInDays" : 30
+      }
+    }
+  )
+}
