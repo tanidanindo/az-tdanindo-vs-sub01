@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/random"
       version = "~>3.0"
     }
+    azapi = {
+      source  = "Azure/azapi"
+      version = "~> 1.8.0"
+    }
   }
 }
 
@@ -23,5 +27,9 @@ provider "random" {
 
 # Configure Entra ID provider
 provider "azuread" {
+
+}
+# Configure azapi provider
+provider "azapi" {
 
 }
