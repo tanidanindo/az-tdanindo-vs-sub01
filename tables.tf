@@ -56,7 +56,7 @@ resource "azapi_resource" "data_collection_logs_table2" {
     {
       "properties" : {
         "schema" : {
-          "name" : "Example_CL",
+          "name" : "Example_CL2",
           "columns" : [
             {
               "description" : "The time at which the data was generated",
