@@ -96,3 +96,4 @@ resource "azapi_resource" "data_collection_logs_table2" {
     }
   )
 }
+
