@@ -48,7 +48,7 @@ resource "azapi_resource" "data_collection_logs_table" {
 }
 
 
-resource "azapi_resource" "data_collection_logs_table2" {
+resource "azapi_resource" "data_collection_logs_table" {
   name      = "Example_CL2"
   parent_id = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-td-vs01/providers/Microsoft.OperationalInsights/workspaces/tanilaw01"
   type      = "Microsoft.OperationalInsights/workspaces/tables@2022-10-01"
