@@ -20,11 +20,8 @@ resource "azurerm_log_analytics_workspace" "tanilaw01" {
 }
 
 
-resource "azurerm_resource_group" "app_gateway_rg" {
-  name     = var.app_gateway_rg_name
+resource "azurerm_resource_group" "rg-sentinel-migration" {
+  name     = "rg-sentinel-migration"
   location = var.resource_group_location
   tags     = var.tags
-}
-output "app_gateway_resource_group_name" {
-  value = azurerm_resource_group.app_gateway_rg.name
 }
