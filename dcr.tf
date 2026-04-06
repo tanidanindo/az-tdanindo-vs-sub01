@@ -3,15 +3,6 @@ resource "azurerm_monitor_data_collection_rule" "example" {
   resource_group_name = "rg-sentinel-migration"
   location            = var.resource_group_location
 
-
-  data_sources {
-    syslog {
-      facility_names = ["*"]
-      log_levels     = ["*"]
-      name           = "logstash-syslog"
-      streams        = ["Microsoft-Syslog"]
-    }
-  }
   destinations {
     log_analytics {
       name                  = "tanilaw01"
@@ -24,7 +15,7 @@ resource "azurerm_monitor_data_collection_rule" "example" {
     output_stream = "Example_CL"
   }
   stream_declaration {
-    stream_name = "logstash-syslog-stream"
+    stream_name = "Example"
     column {
       name = "TimeGenerated"
       type = "datetime"
