@@ -29,7 +29,7 @@
           run: terraform fmt -recursive
 
         - name: Commit formatted files
-          uses: stefanzweifel/git-auto-commit-action@v4
+          uses: stefanzweifel/git-auto-commit-action@v7
           with:
             commit_message:  terraform fmt
             file_pattern: '**/*.tf'
