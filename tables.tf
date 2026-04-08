@@ -139,8 +139,8 @@ resource "azapi_resource" "data_collection_logs_table3" {
 }
 
 
-resource "azapi_resource" "data_collection_logs_table3" {
-  name      = "Example3_CL"
+resource "azapi_resource" "data_collection_logs_table44" {
+  name      = "bp_algosec_aux_CL"
   parent_id = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-td-vs01/providers/Microsoft.OperationalInsights/workspaces/tanilaw01"
   type      = "Microsoft.OperationalInsights/workspaces/tables@2022-10-01"
   body = jsonencode(
