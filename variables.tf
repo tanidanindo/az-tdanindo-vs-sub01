@@ -101,3 +101,9 @@ variable "key_size" {
   default     = 2048
 }
 
+variable "parent_id" {
+  type        = string
+  description = "Log analytics workspace id"
+  default     = null
+}
+

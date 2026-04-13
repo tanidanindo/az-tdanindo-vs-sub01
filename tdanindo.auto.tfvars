@@ -4,6 +4,7 @@ subscription_id            = "f1e531f4-e1b0-486c-bb3c-a2e0a49d0121"
 resource_group_location    = "west us 2"
 resource_group_name_prefix = "rg-td"
 location                   = "west us 2"
+parent_id                  = "/subscriptions/3b6ec3d0-18a5-40b2-b076-c567766e210a/resourceGroups/rg-ccan-pltfrm-monitor-mgmt-001/providers/Microsoft.OperationalInsights/workspaces/log-ccan-pltfrm-mgmt-001"
 
 # Networking Configuration (Required)
 #workload_pe_subnet_id = "/subscriptions/71f20f99-4fe8-4348-9836-7b96d8f3fd82/resourceGroups/rg-ccan-pltfrm-network-dev-001/providers/Microsoft.Network/virtualNetworks/vnet-ccan-pltfrm-dev-001/subnets/snet-ccan-pltfrm-pe-dev-002" # Set if needed

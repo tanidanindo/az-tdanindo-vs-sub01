@@ -2,6 +2,7 @@ resource "azurerm_monitor_data_collection_rule" "example" {
   name                = "dcr-example"
   resource_group_name = "rg-sentinel-migration"
   location            = var.resource_group_location
+  kind                = "AgentDirectToStore"
 
   destinations {
     log_analytics {
