@@ -48,50 +48,63 @@ resource "azurerm_monitor_data_collection_rule" "example" {
 
 
 
+resource "azapi_resource" "data_collection_rule_1" {
+  name      = "dcr01"
+  parent_id = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-sentinel-migration"
+  type      = "microsoft.insights/datacollectionrules@2024-03-11"
+  body = jsonencode(
+    {
+      kind = "Direct"
 
-resource "azurerm_monitor_data_collection_rule" "example2" {
-  name                = "dcr2-example"
-  resource_group_name = "rg-sentinel-migration"
-  location            = var.resource_group_location
-  kind                = "Direct"
+      properties = {
+        streamDeclarations = {
+          Custom-Example2_CL = {
+            columns = [
+              {
+                name = "TimeGenerated"
+                type = "datetime"
+              },
+              {
+                name = "Level"
+                type = "string"
+              },
+              {
+                name = "Logger"
+                type = "string"
+              },
+              {
+                name = "Context"
+                type = "string"
+              },
+              {
+                name = "Message"
+                type = "string"
+              },
+              {
+                name = "AdditionalContext"
+                type = "string"
+              }
+            ]
+          }
 
+          destinations = {
+            logAnalytics = [
+              {
+                name                = "tanilaw01"
+                workspaceResourceId = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-td-vs01/providers/Microsoft.OperationalInsights/workspaces/tanilaw01"
+              }
+            ]
+          }
 
-  destinations {
-    log_analytics {
-      name                  = "tanilaw01"
-      workspace_resource_id = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-td-vs01/providers/Microsoft.OperationalInsights/workspaces/tanilaw01"
+          dataFlows = [
+            {
+              streams      = ["Custom-Example2_CL"]
+              destinations = ["tanilaw01"]
+              outputStream = "Custom-Example2_CL"
+            }
+          ]
+        }
+      }
     }
-  }
-  data_flow {
-    streams       = ["Custom-Example2_CL"]
-    destinations  = ["tanilaw01"]
-    output_stream = "Custom-Example2_CL"
-  }
-  stream_declaration {
-    stream_name = "Custom-Example2_CL"
-    column {
-      name = "TimeGenerated"
-      type = "datetime"
-    }
-    column {
-      name = "Level"
-      type = "string"
-    }
-    column {
-      name = "Logger"
-      type = "string"
-    }
-    column {
-      name = "Context"
-      type = "string"
-    }
-    column {
-      name = "Message"
-      type = "string"
-    }
-    column {
-      name = "AdditionalContext"
-      type = "string"
-    }
-  }
+  )
 }
