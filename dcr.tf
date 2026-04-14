@@ -51,7 +51,7 @@ resource "azurerm_monitor_data_collection_rule" "example" {
 resource "azapi_resource" "data_collection_rule_1" {
   name      = "dcr01"
   parent_id = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-sentinel-migration"
-  type      = "microsoft.insights/datacollectionrules@2024-03-11"
+  type      = "microsoft.insights/datacollectionrules@2022-06-01"
   body = jsonencode(
     {
       kind = "Direct"
