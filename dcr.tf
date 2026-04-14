@@ -86,25 +86,24 @@ resource "azapi_resource" "data_collection_rule_1" {
               }
             ]
           }
+        }
 
-          destinations = {
-            logAnalytics = [
-              {
-                name                = "tanilaw01"
-                workspaceResourceId = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-td-vs01/providers/Microsoft.OperationalInsights/workspaces/tanilaw01"
-                workspaceId         = "c4e4cc69-4e12-4e4d-8335-ef3f30d60adc"
-              }
-            ]
-          }
-
-          dataFlows = [
+        destinations = {
+          logAnalytics = [
             {
-              streams      = ["Custom-Example2_CL"]
-              destinations = ["tanilaw01"]
-              outputStream = "Custom-Example2_CL"
+              workspaceResourceId = "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-td-vs01/providers/Microsoft.OperationalInsights/workspaces/tanilaw01"
+              name                = "tanilaw01"
             }
           ]
         }
+
+        dataFlows = [
+          {
+            streams      = ["Custom-Example2_CL"]
+            destinations = ["tanilaw01"]
+            outputStream = "Custom-Example2_CL"
+          }
+        ]
       }
     }
   )
