@@ -107,3 +107,21 @@ variable "parent_id" {
   default     = null
 }
 
+variable "resource_group_id" {
+  type        = string
+  description = "The ID of the resource group"
+  default     = null
+}
+
+variable "log_analytics_workspace_id" {
+  type        = string
+  description = "The ID of the log analytics workspace"
+  default     = null
+}
+
+variable "log_analytics_workspace_name" {
+  type        = string
+  description = "The name of the log analytics workspace"
+  default     = null
+}
+
