@@ -207,34 +207,9 @@ resource "azapi_resource" "bp_average_data_CL" {
       "properties" : {
         "schema" : {
           "name" : "bp_average_data_CL",
-          "columns" : [
-            {
-              "name" : "_BinSize",
-              "type" : "long"
-            },
-            {
-              "name" : "_BinStartTime",
-              "type" : "datetime"
-            },
-            {
-              "name" : "_RuleLastModifiedTime",
-              "type" : "datetime"
-            },
-            {
-              "name" : "_RuleName",
-              "type" : "string"
-            },
-            {
-              "name" : "_OriginalTimeGenerated",
-              "type" : "datetime"
-            },
-            {
-              "name" : "_OriginalType",
-              "type" : "string"
-            },
-            {
-              "name" : "Count",
-              "type" : "long"
+          "columns" : [{
+            "name" : "Count",
+            "type" : "long"
             },
             {
               "name" : "TimeGenerated",
@@ -248,6 +223,9 @@ resource "azapi_resource" "bp_average_data_CL" {
       }
     }
   )
+  lifecycle {
+    ignore_changes = [body]
+  }
 }
 
 
@@ -416,6 +394,7 @@ resource "azapi_resource" "bp_SecurityEvent_aux_CL" {
               "type" : "string"
             },
             {
+              "name" : "CalledStationID",
               "type" : "string"
             },
             {
@@ -1187,7 +1166,6 @@ resource "azapi_resource" "bp_SecurityEvent_aux_CL" {
               "type" : "string"
             }
           ]
-          description = "Analytics Tier Table for RSA SecurID logs"
         },
         "retentionInDays" : 30,
         "totalRetentionInDays" : 365
