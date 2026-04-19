@@ -101,7 +101,6 @@ resource "azapi_resource" "data_collection_rule_1" {
           {
             streams      = ["Custom-Example2_CL"]
             destinations = ["tanilaw01"]
-            transformKql = "source|extend TimeGenerated = todatetime(ls_timestamp)\n"
             outputStream = "Custom-Example2_CL"
           }
         ]
