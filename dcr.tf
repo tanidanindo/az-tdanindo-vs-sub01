@@ -57,6 +57,7 @@ resource "azapi_resource" "data_collection_rule_1" {
       kind     = "Direct"
       location = var.resource_group_location
       properties = {
+        dataCollectionEndpointId : "/subscriptions/f1e531f4-e1b0-486c-bb3c-a2e0a49d0121/resourceGroups/rg-secops/providers/Microsoft.Insights/dataCollectionEndpoints/dce01",
         streamDeclarations = {
           "Custom-Example2_CL" = {
             columns = [
