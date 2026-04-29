@@ -108,3 +108,15 @@ resource "azapi_resource" "data_collection_rule_1" {
     }
   )
 }
+
+data "azuread_service_principal" "appreg-terra-tdanindo" {
+  display_name = "appreg-terra-tdanindo"
+}
+
+resource "azurerm_role_assignment" "appreg-terra-tdanindo_dcr1_metrics_publisher" {
+  scope                = azapi_resource.data_collection_rule_1.id
+  role_definition_name = "Monitoring Metrics Publisher"
+  principal_id         = data.azuread_service_principal.appreg-terra-tdanindo.object_id
+}
+
+
